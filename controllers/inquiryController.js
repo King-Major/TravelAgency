@@ -73,3 +73,27 @@ exports.updateInquiryStatus = async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
+
+exports.deleteInquiry = async (req, res) => {
+  try {
+    const inquiry = await Inquiry.findByIdAndDelete(req.params.id);
+
+    if (!inquiry) {
+      return res.status(404).json({
+        success: false,
+        message: 'Inquiry not found'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Inquiry deleted successfully'
+    });
+  } catch (error) {
+    console.error('Delete inquiry error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error while deleting inquiry'
+    });
+  }
+};

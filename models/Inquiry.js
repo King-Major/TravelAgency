@@ -4,11 +4,20 @@ const inquirySchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: String, required: true },
+  
+  // Updated: Now an array of strings
   inquiryType: {
-    type: String,
+    type: [String], 
     required: true,
-    enum: ['flight', 'hotel', 'tour', 'visa', 'custom-trip', 'general']
+    enum: ['flight', 'hotel', 'tour', 'visa', 'custom-service', 'general'],
+    validate: {
+      validator: function(v) {
+        return v && v.length > 0; // Ensures at least one type is selected
+      },
+      message: 'At least one inquiry type must be selected.'
+    }
   },
+  
   destinations: [String],
   travelDates: String,
   travelersCount: Number,
@@ -26,9 +35,9 @@ const inquirySchema = new mongoose.Schema({
   },
   replied: { type: Boolean, default: false },
   adminNotes: {
-  type: String,
-  default: ''
-},
+    type: String,
+    default: ''
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Inquiry', inquirySchema);

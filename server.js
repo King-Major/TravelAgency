@@ -19,6 +19,9 @@ app.use('/api/inquiries', require('./routes/inquiryRoutes'));
 app.use('/api/flights', require('./routes/flightRoutes'));       // create this
 app.use('/api/hotels', require('./routes/hotelRoutes'));
 app.use('/api/tours', require('./routes/tourRoutes'));
+// Put this with your other routes
+app.use('/api/leads', require('./routes/leadRoutes'));
+
 
 const PORT = process.env.PORT || 5000;
 
